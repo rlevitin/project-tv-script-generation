@@ -66,7 +66,7 @@ def create_lookup_tables(text):
     :param text: The text of tv scripts split into words
     :return: A tuple of dicts (vocab_to_int, int_to_vocab)
     """
-    # TODO: Implement Function
+    
     word_counts = Counter(text)
     sorted_words = sorted(word_counts, key = word_counts.get, reverse = True)
     vocab_to_int = {word: ii for ii, word in enumerate(sorted_words, 1)}
@@ -106,8 +106,20 @@ def token_lookup():
     :return: Tokenized dictionary where the key is the punctuation and the value is the token
     """
     # TODO: Implement Function
-        
-    return None
+    punctuation_tokens = {
+        '.': '||period||',
+        ',': '||comma||',
+        '"': '||quotation||',
+        ';': '||semicolon||',
+        '!': '||exclamation_mark||',
+        '?': '||question_mark||',
+        '(': '||l_paren||',
+        ')': '||r_paren||',
+        '-': '||dash||',
+        '\n': '||newline||'
+    }
+
+    return punctuation_tokens
 
 """
 DON'T MODIFY ANYTHING IN THIS CELL THAT IS BELOW THIS LINE
