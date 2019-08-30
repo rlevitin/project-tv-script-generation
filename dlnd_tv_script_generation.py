@@ -216,10 +216,21 @@ def batch_data(words, sequence_length, batch_size):
     :param batch_size: The size of each batch; the number of sequences in a batch
     :return: DataLoader with batched data
     """
-    # TODO: Implement function
-    
+    # drop the last words instead of wrapping to the beginning
+    feature_length = len(words) - sequence_length 
+
+    # instantiate tensors of the right size
+    feature_tensors = torch.zeros((feature_length, sequence_length))
+    target_tensors = torch.zeros(feature_length)
+
+    for n in range(feature_length):
+        feature_tensors[n,:] = words[n:n+sequence_length]
+        target_tensors[n] = words[n+sequence_length]
+                 
+    data = TensorDataset(feature_tensors, target_tensors)
+    data_loader = torch.utils.data.DataLoader(data, batch_size=batch_size)
     # return a dataloader
-    return None
+    return data_loader
 
 # there is no test for this function, but you are encouraged to create
 # print statements and tests of your own
@@ -260,7 +271,7 @@ def batch_data(words, sequence_length, batch_size):
 #%%
 # test dataloader
 
-test_text = range(50)
+test_text = torch.Tensor(range(50))
 t_loader = batch_data(test_text, sequence_length=5, batch_size=10)
 
 data_iter = iter(t_loader)
